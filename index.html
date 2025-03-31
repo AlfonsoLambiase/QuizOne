@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizOne</title>
+    <link rel="icon" href="assets/quiz favicon.avif" type="image/x-icon">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url(assets/quiz-logo.jpg);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .quiz-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+        }
+
+        .question {
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-family: cursive;
+        }
+
+        .option {
+            display: block;
+            padding: 10px;
+            width: 100px;
+            margin: 5px 0;
+            background-color: #eee;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: auto;
+            margin-bottom: 10px;
+            font-family: cursive;
+        }
+
+        .option:hover {
+            background-color: #32b809f3;
+        }
+
+        #result {
+            margin-top: 15px;
+            font-size: 16px;
+            font-family: cursive;
+        }
+
+        #next-btn {
+            display: none;
+            margin: auto;
+            margin-top: 15px;
+            font-family: cursive;
+            border-style: none;
+            padding: 10px;
+        }
+
+        #next-btn:hover {
+            background-color: #e8e409f0;
+            border-radius: 5px;
+        }
+
+        #return-btn {
+            display: none;
+            margin: auto;
+            margin-top: 15px;
+            font-family: cursive;
+            border-style: none;
+            padding: 10px;
+        }
+
+        #return-btn:hover {
+            background-color: #e8e409f0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quiz-container">
+        <div class="question" id="question-text">Qual è la capitale d'Italia?</div>
+        <button class="option" onclick="checkAnswer(0)">Roma</button>
+        <button class="option" onclick="checkAnswer(1)">Milano</button>
+        <button class="option" onclick="checkAnswer(2)">Napoli</button>
+        <button class="option" onclick="checkAnswer(3)">Torino</button>
+        <div id="result"></div>
+        <button id="next-btn" onclick="nextQuestion()">Avanti</button>
+        <button id="return-btn">Ritorna alla Home</button>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Qual è la capitale d'Italia?",
+                options: ["Roma", "Milano", "Napoli", "Torino"],
+                correctAnswer: 0
+            },
+            {
+                question: "Chi ha scritto 'Divina Commedia'?",
+                options: ["Giovanni Boccaccio", "Petrarca", "Dante Alighieri", "Alessandro Manzoni"],
+                correctAnswer: 2
+            },
+            {
+                question: "Qual è la montagna più alta del mondo?",
+                options: ["K2", "Kilimangiaro", "Monte Fuji", "Everest"],
+                correctAnswer: 3
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let result = document.getElementById("result");
+        let nextbtn = document.getElementById("next-btn");
+        let questionText = document.getElementById("question-text");
+        let options = document.querySelectorAll('.option');
+        const returnbtn = document.getElementById("return-btn");
+
+        function loadQuestion() {
+            const question = questions[currentQuestionIndex];
+            questionText.textContent = question.question;
+
+            options.forEach((button, index) => {
+                button.textContent = question.options[index];
+                button.disabled = false;   // Riabilita i pulsanti quando viene caricata una nuova domanda
+                button.style.backgroundColor = "#eee";   // Reset colore background pulsanti
+            });
+
+            result.textContent = '';
+            nextbtn.style.display = 'none';
+        }
+
+        function checkAnswer(selectedOption) {
+            const correctAnswer = questions[currentQuestionIndex].correctAnswer;
+            if (selectedOption === correctAnswer) {
+                score++;
+                result.textContent = 'Risposta corretta!';
+            } else {
+                result.textContent = 'Risposta sbagliata!';
+            }
+
+
+            options.forEach(button => {
+                button.disabled = true;   // Disabilita tutti i pulsanti dopo la risposta
+                if (button.textContent === questions[currentQuestionIndex].options[correctAnswer]) {
+                    button.style.backgroundColor = "#32b809f3";   // Colore verde per la risposta corretta
+                } else {
+                    button.style.backgroundColor = "#ea2e04f3";   // Colore rosso per le risposte sbagliate
+                }
+            });
+
+            nextbtn.style.display = 'block'; // Mostra il pulsante 'Avanti'
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                result.textContent = `Hai completato il quiz! Punteggio finale: ${score} su ${questions.length}`;
+                nextbtn.style.display = 'none';
+                returnbtn.style.display = "flex";
+
+                returnbtn.addEventListener("click", () => {
+                    window.history.back();   // Torna alla pagina precedente al click
+                })
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+
+</html>

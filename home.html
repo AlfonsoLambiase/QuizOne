@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizOne</title>
+    <link rel="icon" href="assets/quiz favicon.avif" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url(assets/domanda.jpg);
+            background-position: center;
+            overflow: hidden;
+            font-family: cursive;
+        }
+
+        #quizLink {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-size: larger;
+            animation: pulse 1s infinite;
+        }
+
+        #quizLink:hover {
+            color: #32b809f3;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.5);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1 id="quizTitle">QuizOne</h1>
+        <p id=" quizText">Mettiti alla prova con queste facili e divertenti domande a risposta multipla e allena il tuo
+            QI!</p>
+        <a href="index.html" id="quizLink">Inizia il Quiz</a>
+    </div>
+</body>
+
+</html>
